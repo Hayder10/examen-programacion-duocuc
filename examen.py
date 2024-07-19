@@ -1,4 +1,5 @@
 import random
+import csv
 from math import pow
 
 TRABAJADORES = ["Juan Pérez","María García","Carlos López","Ana Martínez","Pedro Rodríguez","Laura Hernández","Miguel Sánchez","Isabel Gómez","Francisco Díaz","Elena Fernández"]
@@ -109,7 +110,29 @@ def calcular_media_geometrica():
     for sueldo in sueldos:
         multiplicado*=sueldo
     return int(pow(multiplicado,1/len(sueldos)))
-    
+
+def reporte_sueldos():
+    trabajadores_completos = calcular_trabajadores_completos()
+    with open("reporte_sueldos.csv","w") as archivo:
+        archivo_csv = csv.DictWriter(archivo,trabajadores_completos[0].keys())
+        archivo_csv.writeheader()
+        archivo_csv.writerows(trabajadores_completos)
+
+
+def calcular_trabajadores_completos():
+    trabajadores_completos = []
+    for trabajador in dict_trabajadores:
+        desc_salud = int(trabajador["Sueldo"] * 0.07)
+        desc_afp = int(trabajador["Sueldo"] * 0.12)
+        trabajador = {
+            "Nombre empleado" : trabajador["Nombre"],
+            "Sueldo Base" : trabajador["Sueldo"],
+            "Descuento Salud": desc_salud,
+            "Descuento AFP": desc_afp,
+            "Sueldo Líquido": trabajador["Sueldo"] - (desc_salud + desc_afp)
+        }
+        trabajadores_completos.append(trabajador)
+    return trabajadores_completos
 
 
 def imprimir_mensaje(mensaje):
@@ -143,7 +166,8 @@ def main():
             if sueldos_generados: ver_estadisticas()
             else: imprimir_error("Debes asignar los sueldos primero!")
         elif opcion == 4:
-            pass
+            if sueldos_generados: reporte_sueldos()
+            else: imprimir_error("Debes asignar los sueldos primero!")
         elif opcion == 5:
             break
 main()
