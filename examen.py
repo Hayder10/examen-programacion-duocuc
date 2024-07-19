@@ -121,9 +121,9 @@ def reporte_sueldos():
 
 def imprimir_reporte(trabajadores):
     print("")
-    print("Nombre empleado\t\tSueldo Base\tDescuento Salud\tDescuento AFP\tSueldo Líquido")
+    print(f"{'Nombre empleado':<20}{'Sueldo Base':<15}{'Descuento Salud':<20}{'Descuento AFP':<15}{'Sueldo Líquido':<15}")
     for trabajador in trabajadores:
-        print(f"{trabajador["Nombre empleado"]}\t\t{trabajador["Sueldo Base"]}\t{trabajador["Descuento Salud"]}\t{trabajador["Descuento AFP"]}\t{trabajador["Sueldo Líquido"]}")
+        print(f"{trabajador["Nombre empleado"]:<20}{trabajador["Sueldo Base"]:<15}{trabajador["Descuento Salud"]:<20}{trabajador["Descuento AFP"]:<15}{trabajador["Sueldo Líquido"]:<15}")
     print("")
 
 
