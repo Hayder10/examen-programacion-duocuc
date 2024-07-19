@@ -117,6 +117,14 @@ def reporte_sueldos():
         archivo_csv = csv.DictWriter(archivo,trabajadores_completos[0].keys())
         archivo_csv.writeheader()
         archivo_csv.writerows(trabajadores_completos)
+    imprimir_reporte(trabajadores_completos)
+
+def imprimir_reporte(trabajadores):
+    print("")
+    print("Nombre empleado\t\tSueldo Base\tDescuento Salud\tDescuento AFP\tSueldo Líquido")
+    for trabajador in trabajadores:
+        print(f"{trabajador["Nombre empleado"]}\t\t{trabajador["Sueldo Base"]}\t{trabajador["Descuento Salud"]}\t{trabajador["Descuento AFP"]}\t{trabajador["Sueldo Líquido"]}")
+    print("")
 
 
 def calcular_trabajadores_completos():
@@ -126,10 +134,10 @@ def calcular_trabajadores_completos():
         desc_afp = int(trabajador["Sueldo"] * 0.12)
         trabajador = {
             "Nombre empleado" : trabajador["Nombre"],
-            "Sueldo Base" : trabajador["Sueldo"],
-            "Descuento Salud": desc_salud,
-            "Descuento AFP": desc_afp,
-            "Sueldo Líquido": trabajador["Sueldo"] - (desc_salud + desc_afp)
+            "Sueldo Base" : f"${trabajador["Sueldo"]}",
+            "Descuento Salud": f"${desc_salud}",
+            "Descuento AFP": f"${desc_afp}",
+            "Sueldo Líquido": f"${trabajador["Sueldo"] - (desc_salud + desc_afp)}"
         }
         trabajadores_completos.append(trabajador)
     return trabajadores_completos
@@ -169,5 +177,6 @@ def main():
             if sueldos_generados: reporte_sueldos()
             else: imprimir_error("Debes asignar los sueldos primero!")
         elif opcion == 5:
+            imprimir_mensaje("Finalizando programa\nDesarrollado por Rodrigo Cabrera\nRUT 20.541.575-0")
             break
 main()
